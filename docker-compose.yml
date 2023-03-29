@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php-7_3/Dockerfile
+    container_name: laravel-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - ./docker/php-7_3/config/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/php-7_3/config/sites-available:/etc/apache2/sites-available
+      - ./docker/php-7_3/config/ssl:/etc/apache2/ssl
+    networks:
+      - app-network
+    depends_on:
+      - db
+    ports:
+      - "8000:80"
+      - "443:443"
+
+  db:
+    image: mysql:5.7
+    container_name: local_db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: app_barbearia
+      MYSQL_ROOT_PASSWORD: app
+      MYSQL_USER: levi
+      MYSQL_PASSWORD: levi
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    networks:
+      - app-network
+    ports:
+      - "3362:3306"
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
+    driver: bridge

@@ -1,6 +1,6 @@
 # Barber App
 
-Um projeto do canal Raphael Pontes.
+Um projeto baseado no projeto app barber do canal Raphael Pontes.
 - [Canal Youtube](https://www.youtube.com/channel/UCv4EWSgNQqqv6HLpGyCkePQ)
 
 - Verifique o Charset do banco "app_barbearia" criado, ele deve ser UTF8mb4
